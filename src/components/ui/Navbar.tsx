@@ -3,9 +3,14 @@
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { Button } from "./button";
 import { ThemeToggle } from "../ThemeToggle";
+import { useState } from "react";
+import NetworksList from "../NetworksList";
 
 const Navbar = () => {
+  const [showNetworks, setShowNetworks] = useState(false);
+  const [loading,setLoading] = useState(true);
   return (
+    <>
     <div className="flex flex-row items-center justify-between border-b p-4">
       <div className="flex items-center gap-3">
         <SidebarTrigger />
@@ -16,11 +21,28 @@ const Navbar = () => {
 
       <div className="flex items-center gap-3">
         <ThemeToggle />
-        <Button variant="outline" className="font-bold">
-          Create Wallet
+        <Button
+          variant="outline"
+          className="font-bold"
+          onClick={()=> {
+            setShowNetworks(!showNetworks)
+          }}
+        
+        >
+          {loading !== true ? "Create Wallet" : "Add Wallet"}
         </Button>
+        
       </div>
     </div>
+
+    <main>
+          {showNetworks ? (
+            <NetworksList/>
+          ): (
+            "nothing"
+          )}
+    </main>
+    </>
   );
 };
 
